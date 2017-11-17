@@ -1,7 +1,7 @@
 import neuralnetworks as nn
 import matplotlib.pyplot as plt
 import numpy as np
-
+import time
 
 def testfn():
 	nnet = nn.NeuralNetwork(1,[4,5],1)
@@ -41,7 +41,17 @@ if __name__ == '__main__':
 	T[np.logical_and(X > 5, X < 7)] *= 3
 	#testfn()
 
-	A = np.array([1,2,3,4,5])
-	B = np.array([1,2,3,4,7])
-	print(B - A)
-	
+	#A = np.array([1,2,3,4,5])
+	#B = np.array([1,2,3,4,7])
+	#print(B - A)
+	a = 5
+	b = 6
+	start = time.time()
+
+	for i in range(10000000):
+		c = a * b
+
+	end = time.time()
+
+	el = end - start
+	print(el)
