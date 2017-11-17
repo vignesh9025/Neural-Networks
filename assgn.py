@@ -20,7 +20,7 @@ def trainNNs(X, T, trainFraction, hiddenLayerStructures, numberRepetitions, numb
 		# Iterate for number of repetitions to train neural network.
 		for i in range(numberRepetitions):
 			# Now, we have to partition X and T, into training and testing data.
-			Xtrain,Ttrain,Xtest,Ttest = ml.partition(X, T, trainFraction, classification=classify)
+			Xtrain,Ttrain,Xtest,Ttest = ml.partition(X, T, trainFraction*100, classification=classify)
 
 			# Create a neural network for this structure.
 			nnet = nn.NeuralNetwork(1,net,1)
@@ -42,16 +42,17 @@ def trainNNs(X, T, trainFraction, hiddenLayerStructures, numberRepetitions, numb
 
 			# Append train and test performances to list.
 			trainPerformance.append(trainRMSE)
-			testPerformance.append(trainRMSE)
+			testPerformance.append(testRMSE)
 		end_time = time.time()
+		elapsed = end_time - start_time
 		# Now, we append everything to the master 'result' list.
-		result.append([net, trainPerformance, testPerformance])
+		result.append([net, trainPerformance, testPerformance, elapsed])
 
 	return result
 
 if __name__ == '__main__':
 	X = np.arange(10).reshape((-1,1))
 	T = X + 1 + np.random.uniform(-1, 1, ((10,1)))
-	res = trainNNs(X, T, 80, [2, 10, [10, 10]], 5, 100)
+	res = trainNNs(X, T, 0.8, [2, 10, [10, 10]], 5, 100)
 	pprint.pprint(res)
 
